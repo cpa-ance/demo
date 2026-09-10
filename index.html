@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小日子選物｜商品目錄</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <span class="brand">小日子選物</span>
+  <div class="search-box">
+    <input id="search" type="text" placeholder="搜尋商品名稱...">
+  </div>
+  <button class="cart-toggle" id="cartToggle">
+    選購清單 <span class="cart-count" id="cartCount">0</span>
+  </button>
+</header>
+
+<div class="filters" id="filters"></div>
+
+<main class="grid" id="grid"></main>
+
+<!-- 商品資料寫在這裡,新增/修改/刪除商品都直接編輯這個區塊的 JSON -->
+<script type="application/json" id="productsData">
+[
+  {
+    "id": "p1",
+    "name": "手工燕麥餅乾(6入)",
+    "category": "烘焙點心",
+    "price": 180,
+    "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80",
+    "description": "純手工烘焙,無添加防腐劑,燕麥香氣濃郁。"
+  },
+  {
+    "id": "p2",
+    "name": "柚香蜂蜜茶磚",
+    "category": "飲品沖泡",
+    "price": 260,
+    "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=600&q=80",
+    "description": "台灣柚子與龍眼蜂蜜熬製,沖泡即可享用。"
+  },
+  {
+    "id": "p3",
+    "name": "手工編織收納籃",
+    "category": "生活雜貨",
+    "price": 450,
+    "image": "https://images.unsplash.com/photo-1584589167171-541ce45f1eea?w=600&q=80",
+    "description": "天然藤編材質,適合居家收納與擺飾。"
+  },
+  {
+    "id": "p4",
+    "name": "香草豆奶油餅",
+    "category": "烘焙點心",
+    "price": 220,
+    "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80",
+    "description": "馬達加斯加香草籤,奶油香氣層次分明。"
+  },
+  {
+    "id": "p5",
+    "name": "手工陶土杯",
+    "category": "生活雜貨",
+    "price": 380,
+    "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80",
+    "description": "陶藝家手工拉胚,每件皆有獨特紋路。"
+  },
+  {
+    "id": "p6",
+    "name": "冷萃桂花烏龍",
+    "category": "飲品沖泡",
+    "price": 320,
+    "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80",
+    "description": "低溫冷萃工藝,桂花香氣清雅回甘。"
+  }
+]
+</script>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h2>選購清單</h2>
+    <button class="close-btn" id="closeCart">✕</button>
+  </div>
+  <div class="cart-scroll">
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>總金額</span>
+        <span id="cartTotal">NT$ 0</span>
+      </div>
+      <div class="checkout-form">
+        <label>姓名</label>
+        <input id="customerName" type="text" placeholder="您的姓名">
+        <label>聯絡方式(電話或 Line ID)</label>
+        <input id="customerContact" type="text" placeholder="方便店家聯繫您">
+        <label>備註(選填)</label>
+        <textarea id="customerNote" rows="2" placeholder="有其他需求可寫在這裡"></textarea>
+      </div>
+      <button class="send-btn" id="sendBtn" disabled>用 Email 送出訂單</button>
+      <p class="hint">點擊後會開啟您的 Email 軟體,自動帶入訂購明細,請確認後直接送出即可。若沒有跳出 Email 視窗,畫面會改顯示訂單內容,複製後貼到 Email 或 LINE 傳送即可。</p>
+    </div>
+  </div>
+</aside>
+
+<div class="cart-overlay" id="fallbackOverlay"></div>
+<div class="fallback-modal" id="fallbackModal">
+  <h2>訂單內容</h2>
+  <p class="hint">若沒有自動跳出 Email 視窗,請複製以下內容,貼到 Email、LINE 或訊息軟體中傳送給店家。</p>
+  <textarea id="fallbackText" readonly></textarea>
+  <div class="fallback-actions">
+    <button class="send-btn" id="copyBtn">複製訂單內容</button>
+    <button class="cart-toggle" id="closeFallback">關閉</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
