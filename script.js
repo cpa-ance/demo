@@ -1,6 +1,7 @@
 // ====== 請在這裡改成你自己的資訊 ======
 const MERCHANT_EMAIL = "shop@example.com"; // 收訂單的信箱
 const SHOP_NAME = "小日子選物";
+const LINE_URL = "https://line.me/ti/p/@986fcuww"; // LINE 官方帳號連結
 // =====================================
 
 let products = [];
@@ -29,6 +30,7 @@ let searchTerm = "";
 
 function init() {
   products = JSON.parse(document.getElementById("productsData").textContent);
+  document.getElementById("lineBtn").href = LINE_URL;
   renderFilters();
   renderGrid();
   bindEvents();
