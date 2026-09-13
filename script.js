@@ -1,7 +1,7 @@
 // ====== 請在這裡改成你自己的資訊 ======
 const MERCHANT_EMAIL = "cpa.ance@gmail.com"; // 收訂單的信箱
 const SHOP_NAME = "小日子選物";
-const LINE_URL = "https://line.me/ti/p/@986fcuww"; // LINE 官方帳號連結
+const LINE_URL = "https://line.me/ti/p/@littlejiejie"; // LINE 官方帳號連結
 // =====================================
 
 let products = [];
@@ -66,7 +66,6 @@ function renderGrid() {
       <div class="card-body">
         <span class="card-category">${p.category}</span>
         <h3 class="card-name" data-open="${p.id}">${p.name}</h3>
-        <p class="card-desc">${p.description}</p>
         <div class="card-footer">
           <span class="card-price">NT$ ${p.price}</span>
           <button class="add-btn" data-id="${p.id}">加入清單</button>
@@ -103,6 +102,8 @@ function bindEvents() {
   });
 
   backBtn.addEventListener("click", closeDetail);
+
+  document.getElementById("brandHome").addEventListener("click", goHome);
 
   document.getElementById("cartToggle").addEventListener("click", openCart);
   document.getElementById("closeCart").addEventListener("click", closeCart);
@@ -234,6 +235,16 @@ function openDetail(id) {
   listView.hidden = true;
   detailView.hidden = false;
   window.scrollTo(0, 0);
+}
+
+function goHome() {
+  activeCategory = "全部";
+  searchTerm = "";
+  searchInput.value = "";
+  renderFilters();
+  renderGrid();
+  closeDetail();
+  closeCart();
 }
 
 function closeDetail() {
