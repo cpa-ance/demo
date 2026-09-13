@@ -105,6 +105,43 @@ h1, h2, .brand { font-family: 'Noto Sans TC', sans-serif; }
   color: var(--white);
 }
 
+@media (max-width: 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    row-gap: 12px;
+    padding: 16px 20px;
+  }
+  .topbar-actions {
+    display: contents;
+  }
+  .brand {
+    order: 1;
+  }
+  .cart-toggle {
+    order: 2;
+    margin-left: auto;
+  }
+  .search-box {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: none;
+  }
+  .line-btn {
+    order: 4;
+    flex: 1 1 100%;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+  .filters {
+    padding: 14px 20px;
+    gap: 18px;
+  }
+  .grid {
+    padding: 24px 20px 48px;
+    gap: 28px 18px;
+  }
+}
+
 .cart-toggle:hover { background: var(--ink); color: var(--white); }
 
 .cart-count {
