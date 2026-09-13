@@ -95,12 +95,13 @@
         <span id="cartTotal">NT$ 0</span>
       </div>
       <div class="checkout-form">
-        <label>姓名</label>
+        <label>姓名 <span class="required-mark">*</span></label>
         <input id="customerName" type="text" placeholder="您的姓名">
-        <label>聯絡方式(電話或 Line ID)</label>
+        <label>聯絡方式(電話或 Line ID) <span class="required-mark">*</span></label>
         <input id="customerContact" type="text" placeholder="方便店家聯繫您">
         <label>備註(選填)</label>
         <textarea id="customerNote" rows="2" placeholder="有其他需求可寫在這裡"></textarea>
+        <p class="form-error" id="formError"></p>
       </div>
       <button class="send-btn" id="sendBtn" disabled>用 Email 送出訂單</button>
       <p class="hint">點擊後會開啟您的 Email 軟體,自動帶入訂購明細,請確認後直接送出即可。若沒有跳出 Email 視窗,畫面會改顯示訂單內容,複製後貼到 Email 或 LINE 傳送即可。</p>

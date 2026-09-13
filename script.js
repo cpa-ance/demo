@@ -19,6 +19,7 @@ const sendBtn = document.getElementById("sendBtn");
 const customerNameEl = document.getElementById("customerName");
 const customerContactEl = document.getElementById("customerContact");
 const customerNoteEl = document.getElementById("customerNote");
+const formError = document.getElementById("formError");
 const fallbackModal = document.getElementById("fallbackModal");
 const fallbackOverlay = document.getElementById("fallbackOverlay");
 const fallbackText = document.getElementById("fallbackText");
@@ -117,6 +118,15 @@ function bindEvents() {
 
   sendBtn.addEventListener("click", sendOrder);
 
+  customerNameEl.addEventListener("input", () => {
+    customerNameEl.classList.remove("input-error");
+    formError.classList.remove("show");
+  });
+  customerContactEl.addEventListener("input", () => {
+    customerContactEl.classList.remove("input-error");
+    formError.classList.remove("show");
+  });
+
   copyBtn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(fallbackText.value);
@@ -189,9 +199,21 @@ function sendOrder() {
   const ids = Object.keys(cart);
   if (ids.length === 0) return;
 
-  const name = customerNameEl.value.trim() || "(未填寫)";
-  const contact = customerContactEl.value.trim() || "(未填寫)";
+  const name = customerNameEl.value.trim();
+  const contact = customerContactEl.value.trim();
   const note = customerNoteEl.value.trim();
+
+  customerNameEl.classList.toggle("input-error", !name);
+  customerContactEl.classList.toggle("input-error", !contact);
+
+  if (!name || !contact) {
+    formError.textContent = "請填寫姓名與聯絡方式,才能送出訂單";
+    formError.classList.add("show");
+    (!name ? customerNameEl : customerContactEl).focus();
+    return;
+  }
+
+  formError.classList.remove("show");
 
   let total = 0;
   const lines = ids.map(id => {

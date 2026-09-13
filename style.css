@@ -5,6 +5,7 @@
   --line: #dad5c8;
   --line-strong: #b8b2a2;
   --white: #ffffff;
+  --error: #a13a3a;
 }
 
 * { box-sizing: border-box; }
@@ -454,6 +455,27 @@ h1, h2, .brand { font-family: 'Noto Sans TC', sans-serif; }
   font-size: 11px;
   color: var(--ink-soft);
   letter-spacing: 0.03em;
+}
+
+.required-mark {
+  color: var(--error);
+}
+
+.checkout-form input.input-error,
+.checkout-form textarea.input-error {
+  border-bottom-color: var(--error);
+}
+
+.form-error {
+  font-size: 12px;
+  color: var(--error);
+  margin: -4px 0 10px;
+  min-height: 16px;
+  display: none;
+}
+
+.form-error.show {
+  display: block;
 }
 
 .send-btn {
