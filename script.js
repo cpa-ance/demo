@@ -6,7 +6,10 @@ const LINE_URL = "https://line.me/ti/p/@986fcuww"; // LINE 官方帳號連結
 
 let products = [];
 let cart = {}; // { productId: qty }
+let currentDetailId = null;
 
+const listView = document.getElementById("listView");
+const detailView = document.getElementById("detailView");
 const grid = document.getElementById("grid");
 const filters = document.getElementById("filters");
 const searchInput = document.getElementById("search");
@@ -25,6 +28,7 @@ const fallbackOverlay = document.getElementById("fallbackOverlay");
 const fallbackText = document.getElementById("fallbackText");
 const copyBtn = document.getElementById("copyBtn");
 const closeFallback = document.getElementById("closeFallback");
+const backBtn = document.getElementById("backBtn");
 
 let activeCategory = "全部";
 let searchTerm = "";
@@ -52,16 +56,16 @@ function renderGrid() {
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<p style="color:#6b6459;padding:24px;">找不到符合的商品。</p>`;
+    grid.innerHTML = `<p style="color:#8a8578;padding:24px;">找不到符合的商品。</p>`;
     return;
   }
 
   grid.innerHTML = filtered.map(p => `
-    <div class="card">
-      <img src="${p.image}" alt="${p.name}" loading="lazy">
+    <div class="card" data-id="${p.id}">
+      <img src="${p.images[0]}" alt="${p.name}" loading="lazy" data-open="${p.id}">
       <div class="card-body">
         <span class="card-category">${p.category}</span>
-        <h3 class="card-name">${p.name}</h3>
+        <h3 class="card-name" data-open="${p.id}">${p.name}</h3>
         <p class="card-desc">${p.description}</p>
         <div class="card-footer">
           <span class="card-price">NT$ ${p.price}</span>
@@ -87,18 +91,18 @@ function bindEvents() {
   });
 
   grid.addEventListener("click", e => {
-    const btn = e.target.closest(".add-btn");
-    if (!btn) return;
-    const id = btn.dataset.id;
-    cart[id] = (cart[id] || 0) + 1;
-    btn.textContent = "已加入";
-    btn.classList.add("added");
-    setTimeout(() => {
-      btn.textContent = "加入清單";
-      btn.classList.remove("added");
-    }, 900);
-    renderCart();
+    const addBtn = e.target.closest(".add-btn");
+    if (addBtn) {
+      addToCart(addBtn.dataset.id, addBtn);
+      return;
+    }
+    const openTarget = e.target.closest("[data-open]");
+    if (openTarget) {
+      openDetail(openTarget.dataset.open);
+    }
   });
+
+  backBtn.addEventListener("click", closeDetail);
 
   document.getElementById("cartToggle").addEventListener("click", openCart);
   document.getElementById("closeCart").addEventListener("click", closeCart);
@@ -142,10 +146,104 @@ function bindEvents() {
   fallbackOverlay.addEventListener("click", closeFallbackModal);
 }
 
-function closeFallbackModal() {
-  fallbackModal.classList.remove("open");
-  fallbackOverlay.classList.remove("open");
+function addToCart(id, btn) {
+  cart[id] = (cart[id] || 0) + 1;
+  if (btn) {
+    const originalText = btn.textContent;
+    btn.textContent = "已加入";
+    btn.classList.add("added");
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove("added");
+    }, 900);
+  }
+  renderCart();
 }
+
+/* ---------- 商品詳細頁 ---------- */
+
+function youtubeId(url) {
+  if (!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=)([\w-]+)/,
+    /(?:youtu\.be\/)([\w-]+)/,
+    /(?:youtube\.com\/embed\/)([\w-]+)/,
+  ];
+  for (const re of patterns) {
+    const m = url.match(re);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+function openDetail(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  currentDetailId = id;
+
+  document.getElementById("galleryMainImg").src = p.images[0];
+  document.getElementById("galleryMainImg").alt = p.name;
+
+  const thumbsEl = document.getElementById("galleryThumbs");
+  if (p.images.length > 1) {
+    thumbsEl.innerHTML = p.images
+      .map((img, i) => `<img src="${img}" data-idx="${i}" class="${i === 0 ? "active" : ""}" alt="${p.name} 圖片 ${i + 1}">`)
+      .join("");
+    thumbsEl.style.display = "flex";
+  } else {
+    thumbsEl.innerHTML = "";
+    thumbsEl.style.display = "none";
+  }
+  thumbsEl.onclick = e => {
+    const img = e.target.closest("img[data-idx]");
+    if (!img) return;
+    const idx = Number(img.dataset.idx);
+    document.getElementById("galleryMainImg").src = p.images[idx];
+    thumbsEl.querySelectorAll("img").forEach(t => t.classList.remove("active"));
+    img.classList.add("active");
+  };
+
+  document.getElementById("detailCategory").textContent = p.category;
+  document.getElementById("detailName").textContent = p.name;
+  document.getElementById("detailPrice").textContent = `NT$ ${p.price}`;
+  document.getElementById("detailDesc").textContent = p.description;
+
+  const specTable = document.getElementById("specTable");
+  if (p.specs && p.specs.length > 0) {
+    specTable.innerHTML = p.specs
+      .map(s => `<tr><th>${s.label}</th><td>${s.value}</td></tr>`)
+      .join("");
+    document.getElementById("specBlock").style.display = "block";
+  } else {
+    document.getElementById("specBlock").style.display = "none";
+  }
+
+  const videoWrap = document.getElementById("videoWrap");
+  const vid = youtubeId(p.videoUrl);
+  if (vid) {
+    videoWrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid}" title="${p.name} 產品影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    document.getElementById("videoBlock").style.display = "block";
+  } else {
+    videoWrap.innerHTML = "";
+    document.getElementById("videoBlock").style.display = "none";
+  }
+
+  const detailAddBtn = document.getElementById("detailAddBtn");
+  detailAddBtn.onclick = () => addToCart(p.id, detailAddBtn);
+
+  listView.hidden = true;
+  detailView.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function closeDetail() {
+  detailView.hidden = true;
+  listView.hidden = false;
+  currentDetailId = null;
+  window.scrollTo(0, 0);
+}
+
+/* ---------- 購物車 ---------- */
 
 function openCart() {
   cartDrawer.classList.add("open");
@@ -176,7 +274,7 @@ function renderCart() {
     total += subtotal;
     return `
       <div class="cart-item">
-        <img src="${p.image}" alt="${p.name}">
+        <img src="${p.images[0]}" alt="${p.name}">
         <div class="cart-item-info">
           <div class="cart-item-name">${p.name}</div>
           <div class="cart-item-price">NT$ ${p.price} × ${qty} = NT$ ${subtotal}</div>
@@ -193,6 +291,11 @@ function renderCart() {
 
   cartTotalEl.textContent = `NT$ ${total}`;
   sendBtn.disabled = false;
+}
+
+function closeFallbackModal() {
+  fallbackModal.classList.remove("open");
+  fallbackOverlay.classList.remove("open");
 }
 
 function sendOrder() {

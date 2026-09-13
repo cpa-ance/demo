@@ -23,63 +23,47 @@
   </div>
 </header>
 
-<div class="filters" id="filters"></div>
+<div id="listView">
+  <div class="filters" id="filters"></div>
+  <main class="grid" id="grid"></main>
+</div>
 
-<main class="grid" id="grid"></main>
+<section class="detail-view" id="detailView" hidden>
+  <button class="back-btn" id="backBtn">← 返回商品列表</button>
 
-<!-- 商品資料寫在這裡,新增/修改/刪除商品都直接編輯這個區塊的 JSON -->
-<script type="application/json" id="productsData">
-[
-  {
-    "id": "p1",
-    "name": "手工燕麥餅乾(6入)",
-    "category": "烘焙點心",
-    "price": 180,
-    "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=80",
-    "description": "純手工烘焙,無添加防腐劑,燕麥香氣濃郁。"
-  },
-  {
-    "id": "p2",
-    "name": "柚香蜂蜜茶磚",
-    "category": "飲品沖泡",
-    "price": 260,
-    "image": "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=600&q=80",
-    "description": "台灣柚子與龍眼蜂蜜熬製,沖泡即可享用。"
-  },
-  {
-    "id": "p3",
-    "name": "手工編織收納籃",
-    "category": "生活雜貨",
-    "price": 450,
-    "image": "https://images.unsplash.com/photo-1584589167171-541ce45f1eea?w=600&q=80",
-    "description": "天然藤編材質,適合居家收納與擺飾。"
-  },
-  {
-    "id": "p4",
-    "name": "香草豆奶油餅",
-    "category": "烘焙點心",
-    "price": 220,
-    "image": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=80",
-    "description": "馬達加斯加香草籤,奶油香氣層次分明。"
-  },
-  {
-    "id": "p5",
-    "name": "手工陶土杯",
-    "category": "生活雜貨",
-    "price": 380,
-    "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&q=80",
-    "description": "陶藝家手工拉胚,每件皆有獨特紋路。"
-  },
-  {
-    "id": "p6",
-    "name": "冷萃桂花烏龍",
-    "category": "飲品沖泡",
-    "price": 320,
-    "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600&q=80",
-    "description": "低溫冷萃工藝,桂花香氣清雅回甘。"
-  }
-]
-</script>
+  <div class="detail-layout">
+    <div class="gallery">
+      <div class="gallery-main">
+        <img id="galleryMainImg" src="" alt="">
+      </div>
+      <div class="gallery-thumbs" id="galleryThumbs"></div>
+    </div>
+
+    <div class="detail-info">
+      <span class="detail-category" id="detailCategory"></span>
+      <h1 class="detail-name" id="detailName"></h1>
+      <div class="detail-price" id="detailPrice"></div>
+      <button class="add-btn detail-add-btn" id="detailAddBtn">加入清單</button>
+    </div>
+  </div>
+
+  <div class="detail-sections">
+    <section class="detail-block" id="specBlock">
+      <h2>規格</h2>
+      <table class="spec-table" id="specTable"></table>
+    </section>
+
+    <section class="detail-block" id="descBlock">
+      <h2>產品介紹</h2>
+      <p class="detail-desc" id="detailDesc"></p>
+    </section>
+
+    <section class="detail-block" id="videoBlock">
+      <h2>產品影片</h2>
+      <div class="video-wrap" id="videoWrap"></div>
+    </section>
+  </div>
+</section>
 
 <div class="cart-overlay" id="cartOverlay"></div>
 <aside class="cart-drawer" id="cartDrawer">
@@ -119,6 +103,134 @@
     <button class="cart-toggle" id="closeFallback">關閉</button>
   </div>
 </div>
+
+<!-- 商品資料寫在這裡,新增/修改/刪除商品都直接編輯這個區塊的 JSON -->
+<script type="application/json" id="productsData">
+[
+  {
+    "id": "p1",
+    "name": "渦輪增壓除濕機 20L",
+    "category": "除濕/空氣家電",
+    "price": 6980,
+    "description": "適合中小坪數住宅使用的除濕機,採用渦輪增壓技術,除濕效率高、噪音低。水箱容量大,長時間運作也不必頻繁清倒。內建智慧濕度感應,自動偵測環境濕度並調整運轉強度,兼顧除濕效果與省電表現。機身附滾輪與把手,方便在房間之間移動使用。",
+    "images": [
+      "https://images.unsplash.com/photo-1631545806609-8d34a75d3f01?w=800&q=80",
+      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80",
+      "https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=800&q=80"
+    ],
+    "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "specs": [
+      { "label": "除濕能力", "value": "20L / 日" },
+      { "label": "適用坪數", "value": "約 12 坪" },
+      { "label": "水箱容量", "value": "4.5L" },
+      { "label": "噪音值", "value": "約 38 dB" },
+      { "label": "額定功率", "value": "260W" },
+      { "label": "尺寸", "value": "330 x 220 x 540 mm" },
+      { "label": "保固", "value": "原廠保固一年" }
+    ]
+  },
+  {
+    "id": "p2",
+    "name": "多功能氣炸鍋 5.5L",
+    "category": "廚房家電",
+    "price": 3280,
+    "description": "5.5L 大容量設計,適合 3-5 人家庭使用。採用360度熱循環技術,少油也能做出酥脆口感。內建8種預設料理模式,炸、烤、蒸、烘焙一機搞定,操作面板簡單直覺,新手也能輕鬆上手。內鍋、烤盤皆可拆卸水洗,清潔方便。",
+    "images": [
+      "https://images.unsplash.com/photo-1585659722983-3a675dabf23d?w=800&q=80",
+      "https://images.unsplash.com/photo-1615486511262-c7dea44da9f5?w=800&q=80",
+      "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=800&q=80"
+    ],
+    "videoUrl": "",
+    "specs": [
+      { "label": "容量", "value": "5.5L" },
+      { "label": "功率", "value": "1700W" },
+      { "label": "溫度範圍", "value": "80°C - 200°C" },
+      { "label": "定時範圍", "value": "1 - 60 分鐘" },
+      { "label": "尺寸", "value": "310 x 320 x 340 mm" },
+      { "label": "保固", "value": "原廠保固一年" }
+    ]
+  },
+  {
+    "id": "p3",
+    "name": "手持隨行果汁機",
+    "category": "廚房家電",
+    "price": 990,
+    "description": "USB Type-C 充電,無線設計方便攜帶,一杯滿電可打約15杯果汁。六葉刀頭設計,能有效攪碎冰塊與堅果類食材。杯身採用食品級Tritan材質,輕巧不易碎,可直接當隨行水壺使用,通勤、健身房、辦公室都適合帶著走。",
+    "images": [
+      "https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=800&q=80",
+      "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=800&q=80"
+    ],
+    "videoUrl": "",
+    "specs": [
+      { "label": "容量", "value": "400ml" },
+      { "label": "電池", "value": "2000mAh" },
+      { "label": "充電方式", "value": "USB Type-C" },
+      { "label": "刀頭材質", "value": "食品級不鏽鋼六葉刀" },
+      { "label": "保固", "value": "原廠保固半年" }
+    ]
+  },
+  {
+    "id": "p4",
+    "name": "蒸氣掛燙機",
+    "category": "生活家電",
+    "price": 1580,
+    "description": "45秒快速加熱,大出蒸量設計,厚外套、窗簾也能輕鬆燙平。手持與立式兩用,附掛架與可拆式水箱,方便收納。三段蒸氣強度可調整,適合各種布料材質使用,是租屋族與小家庭的實用選擇。",
+    "images": [
+      "https://images.unsplash.com/photo-1622480916113-9000ac49b79d?w=800&q=80",
+      "https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=800&q=80"
+    ],
+    "videoUrl": "",
+    "specs": [
+      { "label": "水箱容量", "value": "280ml" },
+      { "label": "加熱時間", "value": "約 45 秒" },
+      { "label": "功率", "value": "1200W" },
+      { "label": "蒸氣強度", "value": "三段可調" },
+      { "label": "保固", "value": "原廠保固一年" }
+    ]
+  },
+  {
+    "id": "p5",
+    "name": "DC 直流變頻立扇",
+    "category": "季節家電",
+    "price": 2680,
+    "description": "採用 DC 直流變頻馬達,運轉安靜、省電效果佳。12段風速切換,搭配 90 度自動擺頭與定時關機功能,夜間使用也不擔心吵。附遙控器操作,面板同時支援觸控與按鍵,滿足不同使用習慣。",
+    "images": [
+      "https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?w=800&q=80",
+      "https://images.unsplash.com/photo-1631889992747-8f9d3a8b0f0a?w=800&q=80"
+    ],
+    "videoUrl": "",
+    "specs": [
+      { "label": "馬達類型", "value": "DC 直流變頻" },
+      { "label": "風速段數", "value": "12段" },
+      { "label": "擺頭角度", "value": "水平90° / 垂直可調" },
+      { "label": "定時功能", "value": "1-8小時" },
+      { "label": "尺寸", "value": "直徑 30cm,高度可調" },
+      { "label": "保固", "value": "原廠保固兩年" }
+    ]
+  },
+  {
+    "id": "p6",
+    "name": "抗敏 HEPA 空氣清淨機",
+    "category": "除濕/空氣家電",
+    "price": 5480,
+    "description": "搭載 H13 醫療級 HEPA 濾網,能有效過濾 PM2.5、花粉與過敏原。適用坪數約15坪,四段風速搭配睡眠模式,夜間運轉幾乎無感。濾網更換提醒功能,面板會主動顯示濾網使用狀態,不必自己計算更換時間。",
+    "images": [
+      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80",
+      "https://images.unsplash.com/photo-1615529162924-f8605388461d?w=800&q=80",
+      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80"
+    ],
+    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
+    "specs": [
+      { "label": "適用坪數", "value": "約 15 坪" },
+      { "label": "濾網等級", "value": "H13 醫療級 HEPA" },
+      { "label": "風速段數", "value": "四段 + 睡眠模式" },
+      { "label": "噪音值", "value": "22 - 52 dB" },
+      { "label": "尺寸", "value": "260 x 260 x 560 mm" },
+      { "label": "保固", "value": "原廠保固一年" }
+    ]
+  }
+]
+</script>
 
 <script src="script.js"></script>
 </body>

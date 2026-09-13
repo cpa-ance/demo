@@ -216,6 +216,7 @@ h1, h2, .brand { font-family: 'Noto Sans TC', sans-serif; }
   object-fit: cover;
   display: block;
   background: var(--line);
+  cursor: pointer;
 }
 
 .card-body {
@@ -239,7 +240,10 @@ h1, h2, .brand { font-family: 'Noto Sans TC', sans-serif; }
   font-weight: 500;
   margin: 0;
   color: var(--ink);
+  cursor: pointer;
 }
+
+.card-name:hover { text-decoration: underline; }
 
 .card-desc {
   font-size: 12px;
@@ -557,3 +561,175 @@ h1, h2, .brand { font-family: 'Noto Sans TC', sans-serif; }
 
 .fallback-actions .send-btn { margin-top: 0; }
 .fallback-actions .cart-toggle { flex-shrink: 0; }
+
+/* ---------- 商品詳細頁 ---------- */
+
+.detail-view {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 32px 80px;
+}
+
+.back-btn {
+  border: none;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+.back-btn:hover { color: var(--ink); }
+
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.gallery-main {
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.gallery-main img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.gallery-thumbs img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  opacity: 0.6;
+}
+
+.gallery-thumbs img.active,
+.gallery-thumbs img:hover {
+  opacity: 1;
+  border-color: var(--ink);
+}
+
+.detail-category {
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+}
+
+.detail-name {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 8px 0 4px;
+  line-height: 1.4;
+}
+
+.detail-price {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.detail-add-btn {
+  width: 100%;
+  max-width: 260px;
+  padding: 12px 20px;
+  font-size: 13px;
+}
+
+.detail-sections {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.detail-block h2 {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.spec-table tr {
+  border-bottom: 1px solid var(--line);
+}
+
+.spec-table th,
+.spec-table td {
+  text-align: left;
+  padding: 12px 8px;
+  font-weight: 400;
+}
+
+.spec-table th {
+  color: var(--ink-soft);
+  width: 30%;
+  white-space: nowrap;
+}
+
+.spec-table td {
+  color: var(--ink);
+}
+
+.detail-desc {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.9;
+  white-space: pre-line;
+  max-width: 640px;
+}
+
+.video-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 16/9;
+  background: var(--line);
+}
+
+.video-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 720px) {
+  .detail-view {
+    padding: 20px 20px 64px;
+  }
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .detail-name {
+    font-size: 19px;
+  }
+  .detail-add-btn {
+    max-width: none;
+  }
+}
